@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/seatbook.css">
+
+</head>
+
+<body>
+  <%- include('navbar.ejs'); %>
+    <%tickets.forEach((x)=>{%>
+      <div class="container mb-5 mt-4 text-center">
+        <button type="button" class="btn btn-primary mr-3">
+          <span class="badge badge-light ">
+            <%=x.mname%>
+          </span>
+
+        </button>
+        <button type="button" class="btn btn-primary mr-3">
+          <span>
+            <%=x.thname%>
+          </span>
+
+        </button>
+        <button type="button" class="btn btn-primary">
+          <span class=>
+            <%=x.thtime%>
+          </span>
+        </button>
+      </div>
+
+      <div class="container">
+
+        <div class="row">
+          <div class="col-12 col-md-12" id="disp">
+
+            <form action="/userhome/userbookseats<%=x.mname%>/<%=x.thname%>/<%=x.thtime%>/<%=x.thseats%>" method="post"
+              id="frm">
+
+              <div class="form-check form-check-inline">
+                <input type="hidden" name="teatername" value="<%=x.thname%>" />
+                <input type="hidden" name="username" value="<%=curuser%>" />
+                <input type="hidden" name="moviename" value="<%=x.mname%>" />
+                <input type="hidden" name="time" value="<%=x.thtime%>" />
+
+                <%for(i=1;i<=a;i++){%>
+                  <input class="form-check-input mr-2 checkbox" type="checkbox" id="<%=i%>" name="seatsbooked"
+                    onclick="selectSeat(this)" />
+                  <%}%>
+
+              </div>
+              <button type="submit" class="btn btn-primary float-right mr-5 mt-5 " id="bt">Book</button>
+
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <%})%>
+
+        </div>
+</body>
+<script>
+
+  function selectSeat(sno) {
+    document.getElementById(sno.id).value = sno.id
+    document.getElementById(sno.id).disabled = true
+    localStorage.clear();
+    console.log(sno.id);
+  }
+</script>
+
+</html>
